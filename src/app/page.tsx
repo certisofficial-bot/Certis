@@ -1,11 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp } from "lucide-react";
+import { Shield, Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp, Mail, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import Image from "next/image";
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -33,31 +32,34 @@ export default function Home() {
     }
   ];
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#0A0A0C] text-zinc-100">
+    <div className="min-h-screen bg-[#0A0A0C] text-zinc-100 scroll-smooth">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0C]/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0C]/90 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* LOGO SECTION - Made larger and removed text */}
-            <div className="flex items-center">
-              <Image 
-                src="/logo.png" 
-                alt="Certis" 
-                width={140} 
-                height={40} 
-                className="object-contain transition-transform hover:scale-105"
-                priority
-              />
+            {/* LOGO - UNTOUCHED */}
+            <div className="flex items-center gap-2">
+              <Shield className="w-7 h-7 text-blue-400" />
+              <span className="font-bold text-xl tracking-tight">Certis</span>
             </div>
             
             <div className="hidden md:flex items-center gap-8">
-              <a href="#features" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Features</a>
-              <a href="#pricing" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Pricing</a>
-              <a href="#faq" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">FAQ</a>
-              <Button variant="outline" className="border-blue-400/50 text-blue-400 hover:bg-blue-400/10">
-                Book a call
-              </Button>
+              <button onClick={() => scrollToSection('features')} className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Features</button>
+              <button onClick={() => scrollToSection('pricing')} className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Pricing</button>
+              <button onClick={() => scrollToSection('faq')} className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">FAQ</button>
+              <a href="mailto:certis.official@gmail.com?subject=Booking%20a%20Call">
+                <Button variant="outline" className="border-blue-400/50 text-blue-400 hover:bg-blue-400/10">
+                  Book a call
+                </Button>
+              </a>
             </div>
           </div>
         </div>
@@ -73,8 +75,8 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <Badge className="mb-6 bg-blue-500/10 text-blue-400 border-blue-500/20 hover:bg-blue-500/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mr-2" />
+            <Badge className="mb-6 bg-blue-500/10 text-blue-400 border-blue-500/20 hover:bg-blue-500/20 cursor-pointer">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mr-2 animate-pulse" />
               Early Access Pilot Now Open
             </Badge>
             
@@ -87,13 +89,17 @@ export default function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-black hover:bg-zinc-200 group">
-                Book Your Pilot Call
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-zinc-700 hover:bg-zinc-800">
-                View Pricing
-              </Button>
+              <a href="mailto:certis.official@gmail.com?subject=Pilot%20Call%20Request&body=Hi%20Certis%20Team,%20I'd%20like%20to%20book%20a%20pilot%20call." className="inline-block">
+                <Button size="lg" className="bg-white text-black hover:bg-zinc-200 group">
+                  Book Your Pilot Call
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </a>
+              <button onClick={() => scrollToSection('pricing')} className="inline-block">
+                <Button size="lg" variant="outline" className="border-zinc-700 hover:bg-zinc-800">
+                  View Pricing
+                </Button>
+              </button>
             </div>
 
             <div className="mt-12 flex items-center justify-center gap-6 text-sm text-zinc-500">
@@ -111,7 +117,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 border-y border-white/10">
+      <section className="py-20 border-y border-white/10 bg-gradient-to-b from-transparent to-blue-500/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -124,10 +130,11 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center"
+                viewport={{ once: true }}
+                className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-400/50 transition-colors"
               >
                 <stat.icon className="w-8 h-8 text-blue-400 mx-auto mb-4" />
-                <div className="text-3xl font-bold mb-2">{stat.value}</div>
+                <div className="text-3xl font-bold mb-2 text-white">{stat.value}</div>
                 <div className="text-zinc-400">{stat.label}</div>
               </motion.div>
             ))}
@@ -141,10 +148,12 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="text-center mb-16"
           >
+            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/20">Features</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why security teams love Certis</h2>
-            <p className="text-zinc-400 text-lg">Stop manually copying answers from your policies to questionnaires.</p>
+            <p className="text-zinc-400 text-lg max-w-2xl mx-auto">Stop manually copying answers from your policies to questionnaires.</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -161,9 +170,10 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+                viewport={{ once: true }}
+                className="p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-blue-400/30 transition-all group"
               >
-                <feature.icon className="w-10 h-10 text-blue-400 mb-4" />
+                <feature.icon className="w-10 h-10 text-blue-400 mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                 <p className="text-zinc-400">{feature.description}</p>
               </motion.div>
@@ -178,8 +188,10 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="text-center mb-16"
           >
+            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/20">How It Works</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">How Certis works</h2>
             <p className="text-zinc-400 text-lg">From upload to completed questionnaire in three simple steps.</p>
           </motion.div>
@@ -195,9 +207,10 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="relative"
+                viewport={{ once: true }}
+                className="relative p-6 rounded-2xl bg-gradient-to-b from-blue-500/10 to-transparent border border-blue-400/20"
               >
-                <div className="text-6xl font-bold text-blue-400/20 mb-4">{item.step}</div>
+                <div className="text-6xl font-bold text-blue-400/30 mb-4">{item.step}</div>
                 <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
                 <p className="text-zinc-400">{item.description}</p>
               </motion.div>
@@ -212,18 +225,20 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="text-center mb-16"
           >
+            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/20">ROI Calculator</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Manual vs. Certis</h2>
             <p className="text-zinc-400 text-lg">See how much time you'll save.</p>
           </motion.div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/10">
-                  <th className="text-left py-4 px-6">Task</th>
-                  <th className="text-center py-4 px-6 text-zinc-400">Manual Process</th>
+                <tr className="border-b border-white/10 bg-white/5">
+                  <th className="text-left py-4 px-6 font-semibold">Task</th>
+                  <th className="text-center py-4 px-6 text-zinc-400 font-semibold">Manual Process</th>
                   <th className="text-center py-4 px-6 text-blue-400 font-semibold">With Certis</th>
                 </tr>
               </thead>
@@ -235,7 +250,7 @@ export default function Home() {
                   ["Review & finalize", "1-2 hours", "15 minutes"],
                   ["Total time per questionnaire", "7-12 hours", "20-30 minutes"]
                 ].map((row, index) => (
-                  <tr key={index} className="border-b border-white/5">
+                  <tr key={index} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                     <td className="py-4 px-6 font-medium">{row[0]}</td>
                     <td className="py-4 px-6 text-center text-zinc-400">{row[1]}</td>
                     <td className="py-4 px-6 text-center text-blue-400 font-semibold">{row[2]}</td>
@@ -253,8 +268,10 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="text-center mb-16"
           >
+            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/20">FAQ</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently asked questions</h2>
             <p className="text-zinc-400 text-lg">Everything you need to know about Certis.</p>
           </motion.div>
@@ -266,19 +283,24 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="border border-white/10 rounded-lg overflow-hidden"
+                viewport={{ once: true }}
+                className="border border-white/10 rounded-lg overflow-hidden bg-[#0A0A0C] hover:border-blue-400/30 transition-colors"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/5 transition-colors"
                 >
                   <span className="font-semibold">{faq.question}</span>
-                  <ChevronDown className={`w-5 h-5 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-5 h-5 text-zinc-400 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
                 </button>
                 {openFaq === index && (
-                  <div className="px-6 pb-4 text-zinc-400">
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    className="px-6 pb-4 text-zinc-400 leading-relaxed"
+                  >
                     {faq.answer}
-                  </div>
+                  </motion.div>
                 )}
               </motion.div>
             ))}
@@ -292,19 +314,22 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="text-center mb-16"
           >
+            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/20">Pricing</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, transparent pricing</h2>
             <p className="text-zinc-400 text-lg">Start free, scale as you grow.</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               {
                 name: "Starter",
                 price: "Free",
                 description: "Perfect for trying out Certis",
-                features: ["3 questionnaires/month", "Basic AI responses", "Email support", "SOC 2 templates"]
+                features: ["3 questionnaires/month", "Basic AI responses", "Email support", "SOC 2 templates"],
+                cta: "Get Started"
               },
               {
                 name: "Professional",
@@ -312,13 +337,15 @@ export default function Home() {
                 period: "/month",
                 description: "For growing security teams",
                 features: ["Unlimited questionnaires", "Advanced AI learning", "Priority support", "All compliance templates", "API access", "Custom integrations"],
-                popular: true
+                popular: true,
+                cta: "Start Free Trial"
               },
               {
                 name: "Enterprise",
                 price: "Custom",
                 description: "For large organizations",
-                features: ["Everything in Pro", "Dedicated account manager", "Custom AI training", "SSO & advanced security", "SLA guarantees", "On-premise option"]
+                features: ["Everything in Pro", "Dedicated account manager", "Custom AI training", "SSO & advanced security", "SLA guarantees", "On-premise option"],
+                cta: "Contact Sales"
               }
             ].map((plan, index) => (
               <motion.div
@@ -326,7 +353,8 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className={`relative p-8 rounded-xl border ${plan.popular ? 'border-blue-400 bg-blue-400/5' : 'border-white/10 bg-white/5'}`}
+                viewport={{ once: true }}
+                className={`relative p-8 rounded-2xl border ${plan.popular ? 'border-blue-400 bg-blue-400/10 shadow-2xl shadow-blue-400/20' : 'border-white/10 bg-white/5'} hover:scale-105 transition-transform`}
               >
                 {plan.popular && (
                   <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white">
@@ -342,14 +370,16 @@ export default function Home() {
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-blue-400" />
-                      <span className="text-sm">{feature}</span>
+                      <Check className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                      <span className="text-sm text-zinc-300">{feature}</span>
                     </li>
                   ))}
                 </ul>
-                <Button className="w-full" variant={plan.popular ? "default" : "outline"}>
-                  Get Started
-                </Button>
+                <a href={`mailto:certis.official@gmail.com?subject=${plan.name}%20Plan%20Inquiry`} className="block">
+                  <Button className="w-full" variant={plan.popular ? "default" : "outline"}>
+                    {plan.cta}
+                  </Button>
+                </a>
               </motion.div>
             ))}
           </div>
@@ -357,45 +387,51 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 bg-gradient-to-b from-transparent to-blue-500/10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-32 bg-gradient-to-b from-transparent to-blue-500/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent" />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
+            <Badge className="mb-6 bg-blue-500/10 text-blue-400 border-blue-500/20">Get Started Today</Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to automate your security reviews?</h2>
             <p className="text-xl text-zinc-400 mb-10">Join forward-thinking security teams who've already cut their questionnaire time by 90%.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-black hover:bg-zinc-200 group">
-                Book Your Pilot Call
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-zinc-700 hover:bg-zinc-800">
-                Contact Sales
-              </Button>
+              <a href="mailto:certis.official@gmail.com?subject=Pilot%20Call%20Request&body=Hi%20Certis%20Team,%20I'd%20like%20to%20book%20a%20pilot%20call." className="inline-block">
+                <Button size="lg" className="bg-white text-black hover:bg-zinc-200 group">
+                  Book Your Pilot Call
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </a>
+              <a href="mailto:certis.official@gmail.com?subject=Sales%20Inquiry" className="inline-block">
+                <Button size="lg" variant="outline" className="border-zinc-700 hover:bg-zinc-800">
+                  Contact Sales
+                  <Mail className="ml-2 w-4 h-4" />
+                </Button>
+              </a>
             </div>
+            <p className="mt-6 text-sm text-zinc-500">Response time: Usually within 24 hours</p>
           </motion.div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-white/10">
+      <footer className="py-12 border-t border-white/10 bg-[#0A0A0C]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            {/* FOOTER LOGO - Made larger and removed text */}
-            <div className="flex items-center">
-              <Image 
-                src="/logo.png" 
-                alt="Certis" 
-                width={120} 
-                height={36} 
-                className="object-contain"
-              />
+            <div className="flex items-center gap-2">
+              <Shield className="w-6 h-6 text-blue-400" />
+              <span className="font-semibold">Certis</span>
             </div>
             <div className="flex gap-6 text-sm text-zinc-400">
               <a href="/privacy" className="hover:text-zinc-100 transition-colors">Privacy Policy</a>
               <a href="/terms" className="hover:text-zinc-100 transition-colors">Terms of Service</a>
-              <a href="mailto:certis.official@gmail.com" className="hover:text-zinc-100 transition-colors">certis.official@gmail.com</a>
+              <a href="mailto:certis.official@gmail.com" className="hover:text-zinc-100 transition-colors flex items-center gap-1">
+                <Mail className="w-3 h-3" />
+                certis.official@gmail.com
+              </a>
             </div>
             <div className="text-sm text-zinc-500">
               © 2026 Certis. All rights reserved.
