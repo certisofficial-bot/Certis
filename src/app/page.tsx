@@ -1,583 +1,393 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowRight, Shield, Zap, Clock, CheckCircle2, ChevronRight, FileText, Server } from "lucide-react";
 import { motion } from "framer-motion";
+import { Shield, Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 
-const CALENDLY_LINK = "https://calendly.com/certis-official/30min";
+export default function Home() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
-  }
-};
+  const faqs = [
+    {
+      question: "How does Certis AI work?",
+      answer: "Certis analyzes your existing security policies, documentation, and previous responses to automatically generate accurate answers to new security questionnaires. It learns from your inputs and improves over time."
+    },
+    {
+      question: "Is my data secure with Certis?",
+      answer: "Absolutely. We use enterprise-grade encryption (AES-256) for data at rest and TLS 1.3 for data in transit. Your documents are never shared with third parties, and we're SOC 2 Type II compliant ourselves."
+    },
+    {
+      question: "Can I integrate Certis with my existing tools?",
+      answer: "Yes! Certis integrates with popular platforms like Google Drive, Confluence, Notion, and SharePoint. We also offer API access for custom integrations."
+    },
+    {
+      question: "What types of questionnaires does Certis support?",
+      answer: "Certis supports SOC 2, ISO 27001, GDPR, HIPAA, SIG, CAIQ, and custom RFPs. If you have a specific format, our team can help configure it."
+    },
+    {
+      question: "How accurate is the AI?",
+      answer: "Our AI achieves 90%+ accuracy on standard questionnaires. Every response is reviewed by you before sending, and the system learns from your corrections to improve future responses."
+    }
+  ];
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.95 },
-  visible: { 
-    opacity: 1, 
-    scale: 1,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-export default function MarketingPage() {
   return (
-    <div className="relative min-h-screen bg-[#0A0A0C] text-zinc-100 selection:bg-indigo-500/30">
-      {/* Subtle grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
-
-      <div className="relative z-10">
-        {/* Navigation */}
-        <motion.nav 
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4 }}
-          className="border-b border-white/5 sticky top-0 z-50 bg-[#0A0A0C]/80 backdrop-blur-md"
-        >
-          <div className="max-w-6xl mx-auto px-6 h-24 flex items-center justify-between">
-            <div className="flex items-center">
-              <img 
-                src="/logo.png" 
-                alt="Certis" 
-                className="h-12 w-auto brightness-125 contrast-125 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] hover:brightness-150 transition-all" 
-              />
+    <div className="min-h-screen bg-[#0A0A0C] text-zinc-100">
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0C]/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center gap-2">
+              <Shield className="w-6 h-6 text-blue-400" />
+              <span className="font-semibold">Certis</span>
             </div>
-            
-            <div className="flex items-center gap-8 text-sm text-zinc-400 font-medium">
-              <a href="#features" className="hover:text-white transition-colors hidden sm:block">Features</a>
-              <a href="#pricing" className="hover:text-white transition-colors hidden sm:block">Pricing</a>
-              <a href="#faq" className="hover:text-white transition-colors hidden sm:block">FAQ</a>
-              <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer" className="text-white bg-white/10 hover:bg-white/20 px-5 py-2 rounded-md transition-colors border border-white/5">
+            <div className="hidden md:flex items-center gap-8">
+              <a href="#features" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Features</a>
+              <a href="#pricing" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Pricing</a>
+              <a href="#faq" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">FAQ</a>
+              <Button variant="outline" className="border-blue-400/50 text-blue-400 hover:bg-blue-400/10">
                 Book a call
-              </a>
+              </Button>
             </div>
           </div>
-        </motion.nav>
+        </div>
+      </nav>
 
-        {/* Hero Section */}
-        <section className="max-w-4xl mx-auto px-6 pt-32 pb-20 text-center">
-          <motion.div variants={fadeInUp} initial="hidden" animate="visible">
-            <Badge variant="outline" className="mb-8 px-3 py-1 text-xs text-zinc-400 border-white/10 bg-white/5 rounded-full">
-              <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 mr-2" />
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center"
+          >
+            <Badge className="mb-6 bg-blue-500/10 text-blue-400 border-blue-500/20 hover:bg-blue-500/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mr-2" />
               Early Access Pilot Now Open
             </Badge>
-          </motion.div>
-
-          <motion.h1 
-            variants={fadeInUp} 
-            initial="hidden" 
-            animate="visible" 
-            transition={{ delay: 0.1 }}
-            className="text-5xl sm:text-6xl font-medium tracking-tight mb-6 leading-[1.1] text-white"
-          >
-            Automate your security <br className="hidden sm:block" />
-            <span className="text-zinc-400">questionnaires.</span>
-          </motion.h1>
-
-          <motion.p 
-            variants={fadeInUp} 
-            initial="hidden" 
-            animate="visible" 
-            transition={{ delay: 0.2 }}
-            className="text-lg text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed"
-          >
-            Certis uses AI to auto-fill RFPs, security reviews, and SOC2 compliance docs 
-            using your existing policies. Reduce review cycles from weeks to hours.
-          </motion.p>
-
-          <motion.div 
-            variants={fadeInUp} 
-            initial="hidden" 
-            animate="visible" 
-            transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
-          >
-            <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="h-12 px-8 text-base font-medium bg-white text-black hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+            
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-transparent">
+              Automate your security<br />questionnaires.
+            </h1>
+            
+            <p className="text-xl text-zinc-400 mb-10 max-w-3xl mx-auto">
+              Certis uses AI to auto-fill RFPs, security reviews, and SOC2 compliance docs using your existing policies. Reduce review cycles from weeks to hours.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" className="bg-white text-black hover:bg-zinc-200 group">
                 Book Your Pilot Call
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </a>
-            <a href="#pricing" className="h-12 px-8">
-              <Button size="lg" variant="outline" className="h-full w-full text-base font-medium border-white/10 text-zinc-300 hover:bg-white/5 hover:text-white transition-all">
+              <Button size="lg" variant="outline" className="border-zinc-700 hover:bg-zinc-800">
                 View Pricing
               </Button>
-            </a>
-          </motion.div>
+            </div>
 
-          {/* Product Mockup */}
-          <motion.div 
-            variants={fadeInUp} 
-            initial="hidden" 
-            animate="visible" 
-            transition={{ delay: 0.4 }}
-            className="relative max-w-4xl mx-auto"
-          >
-            <div className="relative rounded-xl border border-white/10 bg-[#111113] shadow-2xl overflow-hidden">
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-zinc-700" />
-                  <div className="w-3 h-3 rounded-full bg-zinc-700" />
-                  <div className="w-3 h-3 rounded-full bg-zinc-700" />
-                </div>
-                <div className="flex-1 text-center">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-black/50 border border-white/5 text-xs text-zinc-500">
-                    <FileText className="w-3 h-3" />
-                    vendor_security_review.xlsx
-                  </div>
-                </div>
+            <div className="mt-12 flex items-center justify-center gap-6 text-sm text-zinc-500">
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-blue-400" />
+                <span>No credit card required</span>
               </div>
-
-              <div className="p-6 sm:p-8 text-left">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-4 rounded-lg border border-white/5 bg-white/[0.02]">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-1.5">
-                        <span className="text-sm font-medium text-zinc-200">Data Encryption at Rest</span>
-                        <Badge variant="outline" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 text-[10px] px-1.5 py-0 h-5">
-                          <CheckCircle2 className="w-3 h-3 mr-1" /> Auto-filled
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-zinc-500 leading-relaxed">
-                        Yes, we use AES-256 encryption for all data at rest. Infrastructure hosted on AWS with encryption enabled for all storage volumes.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 rounded-lg border border-white/5 bg-white/[0.02]">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-1.5">
-                        <span className="text-sm font-medium text-zinc-200">SOC 2 Type II Certification</span>
-                        <Badge variant="outline" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 text-[10px] px-1.5 py-0 h-5">
-                          <CheckCircle2 className="w-3 h-3 mr-1" /> Auto-filled
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-zinc-500 leading-relaxed">
-                        Yes, we maintain SOC 2 Type II certification. Most recent audit completed Q4 2025 with no exceptions.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 rounded-lg border border-white/5 bg-white/[0.02] opacity-60">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-1.5">
-                        <span className="text-sm font-medium text-zinc-200">Incident Response Procedures</span>
-                        <Badge variant="outline" className="bg-zinc-500/10 text-zinc-400 border-zinc-500/20 text-[10px] px-1.5 py-0 h-5">
-                          <Clock className="w-3 h-3 mr-1" /> Pending
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-zinc-500 italic">
-                        Waiting for additional context...
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-white/5">
-                  <div className="flex items-center justify-between text-xs mb-2">
-                    <span className="text-zinc-500">Completion Progress</span>
-                    <span className="text-zinc-300 font-medium">87%</span>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }} 
-                      animate={{ width: "87%" }} 
-                      transition={{ duration: 1.5, delay: 1.0, ease: "easeOut" }}
-                      className="h-full rounded-full bg-zinc-200" 
-                    />
-                  </div>
-                </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-blue-400" />
+                <span>14-day free trial</span>
               </div>
             </div>
           </motion.div>
-        </section>
+        </div>
+      </section>
 
-        {/* Stats Section */}
-        <section className="max-w-6xl mx-auto px-6 py-16 border-y border-white/5">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      {/* Stats Section */}
+      <section className="py-20 border-y border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { value: "95%", label: "Auto-fill Accuracy" },
-              { value: "10x", label: "Faster Completion" },
-              { value: "500+", label: "Questionnaires Processed" },
-              { value: "24/7", label: "Compliance Ready" }
-            ].map((stat, i) => (
-              <motion.div 
-                key={i}
-                variants={fadeInUp} 
-                initial="hidden" 
-                whileInView="visible" 
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+              { icon: Clock, label: "Average time saved per questionnaire", value: "12 hours" },
+              { icon: TrendingUp, label: "Faster response time", value: "10x" },
+              { icon: Shield, label: "Security standards supported", value: "SOC 2, ISO, GDPR" }
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="text-center"
               >
-                <div className="text-3xl font-medium text-white mb-1">{stat.value}</div>
-                <div className="text-xs text-zinc-500 uppercase tracking-wide">{stat.label}</div>
+                <stat.icon className="w-8 h-8 text-blue-400 mx-auto mb-4" />
+                <div className="text-3xl font-bold mb-2">{stat.value}</div>
+                <div className="text-zinc-400">{stat.label}</div>
               </motion.div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Features Section */}
-        <section id="features" className="max-w-6xl mx-auto px-6 py-24">
-          <motion.div 
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+      {/* Features Section */}
+      <section id="features" className="py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl font-medium tracking-tight mb-4 text-white">Built for modern security teams</h2>
-            <p className="text-zinc-400 max-w-xl mx-auto">Everything you need to accelerate security reviews and close enterprise deals.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why security teams love Certis</h2>
+            <p className="text-zinc-400 text-lg">Stop manually copying answers from your policies to questionnaires.</p>
           </motion.div>
 
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-4"
-          >
-            <FeatureCard
-              icon={<Zap className="w-5 h-5 text-zinc-300" />}
-              title="Instant Auto-Fill"
-              description="Upload any RFP or security questionnaire. Our AI analyzes your documentation and fills it out with high accuracy."
-            />
-            <FeatureCard
-              icon={<Shield className="w-5 h-5 text-zinc-300" />}
-              title="Always Compliant"
-              description="Trained exclusively on your approved security policies. Zero hallucinations, 100% audit-ready responses."
-            />
-            <FeatureCard
-              icon={<Clock className="w-5 h-5 text-zinc-300" />}
-              title="Close Deals Faster"
-              description="Remove the primary bottleneck in enterprise sales. Go from weeks to hours per questionnaire."
-            />
-          </motion.div>
-        </section>
-
-        {/* How It Works Section */}
-        <section className="max-w-6xl mx-auto px-6 py-24 border-t border-white/5">
-          <motion.div 
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl font-medium tracking-tight mb-4 text-white">How it works</h2>
-            <p className="text-zinc-400 max-w-xl mx-auto">Get from questionnaire to completion in three simple steps.</p>
-          </motion.div>
-
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-6"
-          >
-            <HowItWorksCard
-              step="01"
-              title="Upload your documents"
-              description="Connect your security policies, SOC2 reports, and past questionnaire responses. We securely index everything."
-              icon={<FileText className="w-5 h-5" />}
-            />
-            <HowItWorksCard
-              step="02"
-              title="AI analyzes & learns"
-              description="Our AI studies your documentation to understand your security posture, compliance status, and response patterns."
-              icon={<Server className="w-5 h-5" />}
-            />
-            <HowItWorksCard
-              step="03"
-              title="Auto-fill & review"
-              description="Upload any RFP or security questionnaire. Watch as Certis auto-fills the majority of questions with perfect accuracy."
-              icon={<CheckCircle2 className="w-5 h-5" />}
-            />
-          </motion.div>
-        </section>
-
-        {/* Comparison Section */}
-        <section className="max-w-4xl mx-auto px-6 py-24 border-t border-white/5">
-          <motion.div 
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl font-medium tracking-tight mb-4 text-white">Stop wasting weeks on spreadsheets</h2>
-            <p className="text-zinc-400">See how Certis compares to the manual process.</p>
-          </motion.div>
-
-          <motion.div 
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="overflow-hidden rounded-lg border border-white/10 bg-white/[0.02]"
-          >
-            <div className="grid grid-cols-3 border-b border-white/10 bg-white/[0.03]">
-              <div className="p-5 text-sm font-medium text-zinc-300">Feature</div>
-              <div className="p-5 text-sm font-medium text-white text-center border-x border-white/10">Certis</div>
-              <div className="p-5 text-sm font-medium text-zinc-500 text-center">Manual Process</div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { feature: 'Time to complete', certis: 'Hours', manual: '2-4 Weeks' },
-              { feature: 'Accuracy rate', certis: '95%+', manual: '60-70%' },
-              { feature: 'Team members required', certis: '1 person', manual: '3-5 people' },
-              { feature: 'Audit trail & versioning', certis: 'Automatic', manual: 'Manual tracking' },
-              { feature: 'Security compliance', certis: 'SOC 2 / ISO', manual: 'Varies' },
-            ].map((row, i) => (
-              <div key={i} className="grid grid-cols-3 border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors">
-                <div className="p-5 text-sm text-zinc-300">{row.feature}</div>
-                <div className="p-5 text-sm text-center text-emerald-400 border-x border-white/10 bg-emerald-500/[0.03]">{row.certis}</div>
-                <div className="p-5 text-sm text-center text-zinc-500">{row.manual}</div>
-              </div>
+              { icon: Zap, title: "AI-Powered Auto-Fill", description: "Our AI reads your policies and automatically fills questionnaires with accurate, context-aware responses." },
+              { icon: Lock, title: "Enterprise Security", description: "Bank-grade encryption, SOC 2 compliant, and GDPR ready. Your data never leaves our secure infrastructure." },
+              { icon: Sparkles, title: "Smart Learning", description: "Certis learns from your edits and feedback, getting smarter and more accurate with every questionnaire." },
+              { icon: Check, title: "90%+ Accuracy", description: "Our AI achieves industry-leading accuracy rates, with human review capabilities for perfect responses." },
+              { icon: Clock, title: "Save 40+ Hours/Month", description: "Security teams typically save 10-15 hours per questionnaire. That's weeks of work back in your calendar." },
+              { icon: Shield, title: "Multi-Standard Support", description: "SOC 2, ISO 27001, GDPR, HIPAA, SIG, CAIQ, and custom formats. One tool for all compliance needs." }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+              >
+                <feature.icon className="w-10 h-10 text-blue-400 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                <p className="text-zinc-400">{feature.description}</p>
+              </motion.div>
             ))}
-          </motion.div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        {/* FAQ Section */}
-        <section id="faq" className="max-w-3xl mx-auto px-6 py-24 border-t border-white/5">
-          <motion.div 
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+      {/* How It Works */}
+      <section className="py-32 bg-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl font-medium tracking-tight mb-4 text-white">Frequently asked questions</h2>
-            <p className="text-zinc-400">Everything you need to know about Certis.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">How Certis works</h2>
+            <p className="text-zinc-400 text-lg">From upload to completed questionnaire in three simple steps.</p>
           </motion.div>
 
-          <div className="space-y-3">
-            <FAQItem
-              question="How accurate is the AI?"
-              answer="Certis achieves 95%+ accuracy on first-pass auto-fill. The AI is trained exclusively on your approved security policies and past responses, eliminating hallucinations. Our customers typically only need to review and approve the remaining 5-10% of questions."
-            />
-            <FAQItem
-              question="Is my data secure?"
-              answer="Absolutely. We use AES-256 encryption at rest and in transit. Your documents are never shared between customers, and we're SOC 2 Type II certified. We can sign your enterprise security agreement and NDA before onboarding."
-            />
-            <FAQItem
-              question="What formats does Certis support?"
-              answer="We support Excel (.xlsx), Word (.docx), Google Sheets, Google Docs, and most major RFP platforms. Export with perfect formatting preserved, ready to send to your prospects."
-            />
-            <FAQItem
-              question="How long does setup take?"
-              answer="Most teams are up and running in under 2 hours. Upload your security policies, SOC2 report, and 5-10 past questionnaire responses. Our AI indexes everything and is ready to auto-fill immediately."
-            />
-            <FAQItem
-              question="Can I cancel anytime?"
-              answer="Yes. The pilot program includes a 30-day money-back guarantee, no questions asked. After that, you're locked in at your pilot rate for life with no monthly fees if you pay annually."
-            />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { step: "1", title: "Upload Your Documents", description: "Connect your policy docs, previous questionnaires, or security documentation. We support PDF, DOCX, and Google Drive." },
+              { step: "2", title: "AI Analyzes & Learns", description: "Our AI reads and understands your security posture, mapping policies to common questionnaire requirements." },
+              { step: "3", title: "Auto-Fill & Review", description: "Receive AI-generated responses in seconds. Review, edit if needed, and export in your preferred format." }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="relative"
+              >
+                <div className="text-6xl font-bold text-blue-400/20 mb-4">{item.step}</div>
+                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                <p className="text-zinc-400">{item.description}</p>
+              </motion.div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Pricing Section */}
-        <section id="pricing" className="max-w-6xl mx-auto px-6 py-24 border-t border-white/5">
-          <motion.div 
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="relative max-w-3xl mx-auto"
+      {/* Comparison Table */}
+      <section className="py-32">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
           >
-            <div className="relative rounded-xl border border-white/10 bg-white/[0.02] p-8 sm:p-12">
-              <div className="text-center mb-10">
-                <Badge variant="outline" className="mb-6 px-3 py-1 text-xs text-emerald-400 border-emerald-500/20 bg-emerald-500/10 rounded-full">
-                  Limited to first 20 companies
-                </Badge>
-                <h2 className="text-3xl font-medium tracking-tight mb-3 text-white">Early Access Pricing</h2>
-                <p className="text-zinc-400">Get lifetime access at a fraction of the cost. Price increases to €5,000/year after launch.</p>
-              </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Manual vs. Certis</h2>
+            <p className="text-zinc-400 text-lg">See how much time you'll save.</p>
+          </motion.div>
 
-              <div className="max-w-xl mx-auto">
-                <div className="text-center mb-8">
-                  <div className="flex items-baseline justify-center gap-3 mb-2">
-                    <span className="text-5xl font-medium text-white tracking-tight">€499</span>
-                    <span className="text-zinc-500">/month</span>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="text-left py-4 px-6">Task</th>
+                  <th className="text-center py-4 px-6 text-zinc-400">Manual Process</th>
+                  <th className="text-center py-4 px-6 text-blue-400 font-semibold">With Certis</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Read & understand questionnaire", "1-2 hours", "5 minutes"],
+                  ["Search through policies", "3-5 hours", "Instant"],
+                  ["Copy & paste answers", "2-3 hours", "Auto-generated"],
+                  ["Review & finalize", "1-2 hours", "15 minutes"],
+                  ["Total time per questionnaire", "7-12 hours", "20-30 minutes"]
+                ].map((row, index) => (
+                  <tr key={index} className="border-b border-white/5">
+                    <td className="py-4 px-6 font-medium">{row[0]}</td>
+                    <td className="py-4 px-6 text-center text-zinc-400">{row[1]}</td>
+                    <td className="py-4 px-6 text-center text-blue-400 font-semibold">{row[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="py-32 bg-white/5">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently asked questions</h2>
+            <p className="text-zinc-400 text-lg">Everything you need to know about Certis.</p>
+          </motion.div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="border border-white/10 rounded-lg overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/5 transition-colors"
+                >
+                  <span className="font-semibold">{faq.question}</span>
+                  <ChevronDown className={`w-5 h-5 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                </button>
+                {openFaq === index && (
+                  <div className="px-6 pb-4 text-zinc-400">
+                    {faq.answer}
                   </div>
-                  <span className="text-sm text-zinc-500 line-through">€5,000/yr standard pricing</span>
-                </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, transparent pricing</h2>
+            <p className="text-zinc-400 text-lg">Start free, scale as you grow.</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {[
+              {
+                name: "Starter",
+                price: "Free",
+                description: "Perfect for trying out Certis",
+                features: ["3 questionnaires/month", "Basic AI responses", "Email support", "SOC 2 templates"]
+              },
+              {
+                name: "Professional",
+                price: "$299",
+                period: "/month",
+                description: "For growing security teams",
+                features: ["Unlimited questionnaires", "Advanced AI learning", "Priority support", "All compliance templates", "API access", "Custom integrations"],
+                popular: true
+              },
+              {
+                name: "Enterprise",
+                price: "Custom",
+                description: "For large organizations",
+                features: ["Everything in Pro", "Dedicated account manager", "Custom AI training", "SSO & advanced security", "SLA guarantees", "On-premise option"]
+              }
+            ].map((plan, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className={`relative p-8 rounded-xl border ${plan.popular ? 'border-blue-400 bg-blue-400/5' : 'border-white/10 bg-white/5'}`}
+              >
+                {plan.popular && (
+                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white">
+                    Most Popular
+                  </Badge>
+                )}
+                <h3 className="text-xl font-semibold mb-2">{plan.name}</h3>
+                <div className="mb-4">
+                  <span className="text-4xl font-bold">{plan.price}</span>
+                  {plan.period && <span className="text-zinc-400">{plan.period}</span>}
+                </div>
+                <p className="text-zinc-400 mb-6">{plan.description}</p>
                 <ul className="space-y-3 mb-8">
-                  {[
-                    'Unlimited RFP & security questionnaire auto-fill',
-                    'AI trained on your SOC2 policies & past answers',
-                    'Excel/Word export with perfect formatting',
-                    'Priority email support',
-                    'Free updates for life',
-                    'No monthly fees after pilot (if paid annually)'
-                  ].map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 text-zinc-300 text-sm">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                      <span>{feature}</span>
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-blue-400" />
+                      <span className="text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
-
-                <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer" className="block w-full">
-                  <Button className="w-full h-12 text-base font-medium bg-white text-black hover:bg-zinc-200 transition-all">
-                    Book Your Pilot Call
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </a>
-                <p className="text-center text-xs text-zinc-500 mt-4">
-                  30-day money-back guarantee. No questions asked.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Final CTA Banner */}
-        <section className="max-w-6xl mx-auto px-6 py-24">
-          <motion.div 
-            variants={scaleIn}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="relative rounded-xl overflow-hidden border border-white/10 bg-white/[0.02] p-12 sm:p-16 text-center"
-          >
-            <div className="relative z-10">
-              <h2 className="text-3xl sm:text-4xl font-medium tracking-tight mb-4 text-white">
-                Ready to accelerate your security reviews?
-              </h2>
-              <p className="text-zinc-400 max-w-xl mx-auto mb-8">
-                Join the first 20 companies getting lifetime access at our early-bird pilot rate.
-              </p>
-              <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="h-12 px-8 text-base font-medium bg-white text-black hover:bg-zinc-200 transition-all">
-                  Book Your Pilot Call
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                <Button className="w-full" variant={plan.popular ? "default" : "outline"}>
+                  Get Started
                 </Button>
-              </a>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-32 bg-gradient-to-b from-transparent to-blue-500/10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to automate your security reviews?</h2>
+            <p className="text-xl text-zinc-400 mb-10">Join forward-thinking security teams who've already cut their questionnaire time by 90%.</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" className="bg-white text-black hover:bg-zinc-200 group">
+                Book Your Pilot Call
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button size="lg" variant="outline" className="border-zinc-700 hover:bg-zinc-800">
+                Contact Sales
+              </Button>
             </div>
           </motion.div>
-        </section>
+        </div>
+      </section>
 
-        {/* Footer */}
-        <footer className="border-t border-white/5 py-12">
-          <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
-            <div className="flex items-center">
-              <img 
-                src="/logo.png" 
-                alt="Certis" 
-                className="h-9 w-auto brightness-125 contrast-125 opacity-80 hover:opacity-100 transition-opacity" 
-              />
+      {/* Footer */}
+      <footer className="py-12 border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-blue-400" />
+              <span className="font-semibold">Certis</span>
             </div>
-            <p>© 2026 Certis. All rights reserved.</p>
-            <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-zinc-300 transition-colors">Privacy</a>
-              <a href="#" className="hover:text-zinc-300 transition-colors">Terms</a>
-              <a href="mailto:founder@certis.ai" className="hover:text-zinc-300 transition-colors">Contact</a>
+            <div className="flex gap-6 text-sm text-zinc-400">
+              <a href="/privacy" className="hover:text-zinc-100 transition-colors">Privacy Policy</a>
+              <a href="/terms" className="hover:text-zinc-100 transition-colors">Terms of Service</a>
+              <a href="mailto:certis.official@gmail.com" className="hover:text-zinc-100 transition-colors">certis.official@gmail.com</a>
+            </div>
+            <div className="text-sm text-zinc-500">
+              © 2026 Certis. All rights reserved.
             </div>
           </div>
-        </footer>
-      </div>
+        </div>
+      </footer>
     </div>
-  );
-}
-
-// Feature Card Component
-function FeatureCard({ 
-  icon, 
-  title, 
-  description
-}: { 
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) {
-  return (
-    <motion.div 
-      variants={fadeInUp}
-      className="group relative rounded-lg border border-white/5 bg-white/[0.02] p-6 hover:bg-white/[0.04] transition-colors"
-    >
-      <div className="w-10 h-10 rounded-md bg-white/5 border border-white/10 flex items-center justify-center mb-4 group-hover:border-white/20 transition-colors">
-        {icon}
-      </div>
-      <h3 className="text-base font-medium text-white mb-2">{title}</h3>
-      <p className="text-sm text-zinc-400 leading-relaxed">{description}</p>
-    </motion.div>
-  );
-}
-
-// How It Works Card Component
-function HowItWorksCard({ 
-  step, 
-  title, 
-  description, 
-  icon 
-}: { 
-  step: string;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-}) {
-  return (
-    <motion.div 
-      variants={fadeInUp}
-      className="relative p-6 rounded-lg border border-white/5 bg-white/[0.02]"
-    >
-      <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 w-10 h-10 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400">
-          {icon}
-        </div>
-        <div>
-          <div className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider mb-1">Step {step}</div>
-          <h3 className="text-base font-medium text-white mb-2">{title}</h3>
-          <p className="text-sm text-zinc-400 leading-relaxed">{description}</p>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-// FAQ Item Component
-function FAQItem({ question, answer }: { question: string; answer: string }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <motion.div 
-      variants={fadeInUp}
-      className="border border-white/5 rounded-lg overflow-hidden bg-white/[0.02]"
-    >
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/[0.04] transition-colors"
-      >
-        <span className="text-sm font-medium text-zinc-200">{question}</span>
-        <ChevronRight 
-          className={`w-4 h-4 text-zinc-500 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`} 
-        />
-      </button>
-      {isOpen && (
-        <motion.div 
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="px-6 pb-4 text-sm text-zinc-400 leading-relaxed"
-        >
-          {answer}
-        </motion.div>
-      )}
-    </motion.div>
   );
 }

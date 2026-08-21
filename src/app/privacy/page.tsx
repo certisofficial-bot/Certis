@@ -26,9 +26,9 @@ export default function PrivacyPage() {
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">4. Contact Us</h2>
           <p className="text-zinc-300 mb-4">
-            If you have any questions about this Privacy Policy, please contact us at 
-            <a href="mailto:privacy@certis.ai" className="text-blue-400 hover:text-blue-300 ml-1">
-              privacy@certis.ai
+            If you have any questions about this Privacy Policy, please contact us at{' '}
+            <a href="mailto:certis.official@gmail.com" className="text-blue-400 hover:text-blue-300">
+              certis.official@gmail.com
             </a>
           </p>
         </div>
