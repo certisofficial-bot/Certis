@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield, Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp } from "lucide-react";
+import { Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -39,7 +40,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-2">
-              <Shield className="w-6 h-6 text-blue-400" />
+              <Image 
+                src="/logo.png" 
+                alt="Certis" 
+                width={32} 
+                height={32} 
+                className="object-contain"
+                priority
+              />
               <span className="font-semibold">Certis</span>
             </div>
             <div className="hidden md:flex items-center gap-8">
@@ -108,7 +116,7 @@ export default function Home() {
             {[
               { icon: Clock, label: "Average time saved per questionnaire", value: "12 hours" },
               { icon: TrendingUp, label: "Faster response time", value: "10x" },
-              { icon: Shield, label: "Security standards supported", value: "SOC 2, ISO, GDPR" }
+              { icon: Lock, label: "Security standards supported", value: "SOC 2, ISO, GDPR" }
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -145,7 +153,7 @@ export default function Home() {
               { icon: Sparkles, title: "Smart Learning", description: "Certis learns from your edits and feedback, getting smarter and more accurate with every questionnaire." },
               { icon: Check, title: "90%+ Accuracy", description: "Our AI achieves industry-leading accuracy rates, with human review capabilities for perfect responses." },
               { icon: Clock, title: "Save 40+ Hours/Month", description: "Security teams typically save 10-15 hours per questionnaire. That's weeks of work back in your calendar." },
-              { icon: Shield, title: "Multi-Standard Support", description: "SOC 2, ISO 27001, GDPR, HIPAA, SIG, CAIQ, and custom formats. One tool for all compliance needs." }
+              { icon: Zap, title: "Multi-Standard Support", description: "SOC 2, ISO 27001, GDPR, HIPAA, SIG, CAIQ, and custom formats. One tool for all compliance needs." }
             ].map((feature, index) => (
               <motion.div
                 key={index}
@@ -374,7 +382,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
-              <Shield className="w-5 h-5 text-blue-400" />
+              <Image 
+                src="/logo.png" 
+                alt="Certis" 
+                width={24} 
+                height={24} 
+                className="object-contain"
+              />
               <span className="font-semibold">Certis</span>
             </div>
             <div className="flex gap-6 text-sm text-zinc-400">
