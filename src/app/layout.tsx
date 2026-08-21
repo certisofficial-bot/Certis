@@ -1,22 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap"
-});
-
 export const metadata: Metadata = {
-  title: "Certis | Enterprise Security Reviews, Solved in Minutes",
-  description: "AI that auto-fills security questionnaires, RFPs, and SOC2 compliance docs using your existing policies.",
-  keywords: ["RFP", "Security Questionnaire", "SOC2", "B2B Sales", "AI", "Compliance", "Enterprise Security"],
-  authors: [{ name: "Certis", url: "https://certis.ai" }],
+  title: "Certis | Automate Security Questionnaires",
+  description: "Certis uses AI to auto-fill RFPs, security reviews, and SOC2 compliance docs. Reduce review cycles from weeks to hours.",
   openGraph: {
-    title: "Certis | Enterprise Security Reviews, Solved in Minutes",
-    description: "AI that auto-fills security questionnaires, RFPs, and SOC2 compliance docs using your existing policies.",
+    title: "Certis | Automate Security Questionnaires",
+    description: "Reduce security review cycles from weeks to hours with AI.",
+    url: "https://whimsical-biscochitos-5edcc5.netlify.app", // We can update this when you get a custom domain
+    siteName: "Certis",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Certis | Automate Security Questionnaires",
+    description: "Reduce security review cycles from weeks to hours with AI.",
   },
 };
 
@@ -26,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
+    <html lang="en">
+      <body className="antialiased bg-[#0A0A0C] text-zinc-100">
         {children}
       </body>
     </html>
