@@ -38,18 +38,19 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0C]/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
+          <div className="flex justify-between items-center h-20">
+            {/* LOGO SECTION - Made larger and removed text */}
+            <div className="flex items-center">
               <Image 
                 src="/logo.png" 
                 alt="Certis" 
-                width={32} 
-                height={32} 
-                className="object-contain"
+                width={140} 
+                height={40} 
+                className="object-contain transition-transform hover:scale-105"
                 priority
               />
-              <span className="font-semibold">Certis</span>
             </div>
+            
             <div className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Features</a>
               <a href="#pricing" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Pricing</a>
@@ -381,15 +382,15 @@ export default function Home() {
       <footer className="py-12 border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
+            {/* FOOTER LOGO - Made larger and removed text */}
+            <div className="flex items-center">
               <Image 
                 src="/logo.png" 
                 alt="Certis" 
-                width={24} 
-                height={24} 
+                width={120} 
+                height={36} 
                 className="object-contain"
               />
-              <span className="font-semibold">Certis</span>
             </div>
             <div className="flex gap-6 text-sm text-zinc-400">
               <a href="/privacy" className="hover:text-zinc-100 transition-colors">Privacy Policy</a>
