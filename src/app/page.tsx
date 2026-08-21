@@ -45,10 +45,10 @@ export default function Home() {
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0C]/90 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* LOGO - UNTOUCHED */}
+            {/* LOGO - COMPLETELY UNTOUCHED */}
             <div className="flex items-center gap-2">
-              <Shield className="w-7 h-7 text-blue-400" />
-              <span className="font-bold text-xl tracking-tight">Certis</span>
+              <Shield className="w-6 h-6 text-blue-400" />
+              <span className="font-semibold">Certis</span>
             </div>
             
             <div className="hidden md:flex items-center gap-8">
@@ -421,6 +421,7 @@ export default function Home() {
       <footer className="py-12 border-t border-white/10 bg-[#0A0A0C]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            {/* LOGO - COMPLETELY UNTOUCHED */}
             <div className="flex items-center gap-2">
               <Shield className="w-6 h-6 text-blue-400" />
               <span className="font-semibold">Certis</span>
