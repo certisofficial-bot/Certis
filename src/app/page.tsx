@@ -46,7 +46,6 @@ export default function Home() {
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0C]/90 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* YOUR ACTUAL LOGO */}
             <div className="flex items-center">
               <Image 
                 src="/logo.png" 
@@ -393,8 +392,46 @@ export default function Home() {
         </div>
       </section>
 
+      {/* NEW WAITLIST SECTION */}
+      <section className="py-32 bg-gradient-to-b from-blue-500/10 to-transparent relative overflow-hidden">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Badge className="mb-6 bg-blue-500/10 text-blue-400 border-blue-500/20">Join the Waitlist</Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Be the first to experience Certis.</h2>
+            <p className="text-xl text-zinc-400 mb-10">Get early access, exclusive pricing, and priority onboarding when we launch.</p>
+            
+            {/* Netlify Form */}
+            <form 
+              name="waitlist" 
+              method="POST" 
+              data-netlify="true" 
+              className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"
+            >
+              {/* Hidden input required for Netlify Forms to work in Next.js */}
+              <input type="hidden" name="form-name" value="waitlist" />
+              
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your work email"
+                required
+                className="flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+              />
+              <Button type="submit" size="lg" className="bg-blue-500 hover:bg-blue-600 text-white">
+                Join Waitlist
+              </Button>
+            </form>
+            <p className="mt-4 text-sm text-zinc-500">No spam. Unsubscribe anytime.</p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="py-32 bg-gradient-to-b from-transparent to-blue-500/10 relative overflow-hidden">
+      <section className="py-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div
@@ -428,7 +465,6 @@ export default function Home() {
       <footer className="py-12 border-t border-white/10 bg-[#0A0A0C]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            {/* YOUR ACTUAL LOGO IN FOOTER */}
             <div className="flex items-center">
               <Image 
                 src="/logo.png" 
