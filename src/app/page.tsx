@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield, Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp, Mail, ExternalLink } from "lucide-react";
+import { Shield, Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
