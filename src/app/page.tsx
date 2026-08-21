@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield, Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp, Mail } from "lucide-react";
+import { Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -45,10 +46,16 @@ export default function Home() {
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0C]/90 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* LOGO - COMPLETELY UNTOUCHED */}
-            <div className="flex items-center gap-2">
-              <Shield className="w-6 h-6 text-blue-400" />
-              <span className="font-semibold">Certis</span>
+            {/* YOUR ACTUAL LOGO */}
+            <div className="flex items-center">
+              <Image 
+                src="/logo.png" 
+                alt="Certis" 
+                width={120} 
+                height={40} 
+                className="object-contain"
+                priority
+              />
             </div>
             
             <div className="hidden md:flex items-center gap-8">
@@ -421,10 +428,15 @@ export default function Home() {
       <footer className="py-12 border-t border-white/10 bg-[#0A0A0C]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            {/* LOGO - COMPLETELY UNTOUCHED */}
-            <div className="flex items-center gap-2">
-              <Shield className="w-6 h-6 text-blue-400" />
-              <span className="font-semibold">Certis</span>
+            {/* YOUR ACTUAL LOGO IN FOOTER */}
+            <div className="flex items-center">
+              <Image 
+                src="/logo.png" 
+                alt="Certis" 
+                width={100} 
+                height={36} 
+                className="object-contain"
+              />
             </div>
             <div className="flex gap-6 text-sm text-zinc-400">
               <a href="/privacy" className="hover:text-zinc-100 transition-colors">Privacy Policy</a>
