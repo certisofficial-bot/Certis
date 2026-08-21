@@ -62,7 +62,7 @@ export default function Home() {
               <button onClick={() => scrollToSection('features')} className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Features</button>
               <button onClick={() => scrollToSection('pricing')} className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Pricing</button>
               <button onClick={() => scrollToSection('faq')} className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">FAQ</button>
-              <a href="mailto:certis.official@gmail.com?subject=Booking%20a%20Call">
+              <a href="https://calendly.com/certis-official/30min" target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" className="border-blue-400/50 text-blue-400 hover:bg-blue-400/10">
                   Book a call
                 </Button>
@@ -96,7 +96,7 @@ export default function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="mailto:certis.official@gmail.com?subject=Pilot%20Call%20Request&body=Hi%20Certis%20Team,%20I'd%20like%20to%20book%20a%20pilot%20call." className="inline-block">
+              <a href="https://calendly.com/certis-official/30min" target="_blank" rel="noopener noreferrer" className="inline-block">
                 <Button size="lg" className="bg-white text-black hover:bg-zinc-200 group">
                   Book Your Pilot Call
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -382,7 +382,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <a href={`mailto:certis.official@gmail.com?subject=${plan.name}%20Plan%20Inquiry`} className="block">
+                <a href="https://calendly.com/certis-official/30min" target="_blank" rel="noopener noreferrer" className="block">
                   <Button className="w-full" variant={plan.popular ? "default" : "outline"}>
                     {plan.cta}
                   </Button>
@@ -406,7 +406,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to automate your security reviews?</h2>
             <p className="text-xl text-zinc-400 mb-10">Join forward-thinking security teams who've already cut their questionnaire time by 90%.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="mailto:certis.official@gmail.com?subject=Pilot%20Call%20Request&body=Hi%20Certis%20Team,%20I'd%20like%20to%20book%20a%20pilot%20call." className="inline-block">
+              <a href="https://calendly.com/certis-official/30min" target="_blank" rel="noopener noreferrer" className="inline-block">
                 <Button size="lg" className="bg-white text-black hover:bg-zinc-200 group">
                   Book Your Pilot Call
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
