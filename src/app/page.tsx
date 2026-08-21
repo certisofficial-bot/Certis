@@ -9,6 +9,7 @@ import Image from "next/image";
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const faqs = [
     {
@@ -38,6 +39,27 @@ export default function Home() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const encode = (data: Record<string, string>) => {
+    return Object.keys(data)
+      .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ 
+        "form-name": form.getAttribute("name") || "waitlist", 
+        email: (form.elements.namedItem("email") as HTMLInputElement).value 
+      }),
+    })
+      .then(() => setIsSubmitted(true))
+      .catch((error) => alert("Something went wrong. Please try again."));
   };
 
   return (
@@ -392,7 +414,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEW WAITLIST SECTION */}
+      {/* NEW WAITLIST SECTION WITH SUCCESS STATE */}
       <section className="py-32 bg-gradient-to-b from-blue-500/10 to-transparent relative overflow-hidden">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div
@@ -404,28 +426,38 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Be the first to experience Certis.</h2>
             <p className="text-xl text-zinc-400 mb-10">Get early access, exclusive pricing, and priority onboarding when we launch.</p>
             
-            {/* Netlify Form */}
-            <form 
-              name="waitlist" 
-              method="POST" 
-              data-netlify="true" 
-              className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"
-            >
-              {/* Hidden input required for Netlify Forms to work in Next.js */}
-              <input type="hidden" name="form-name" value="waitlist" />
-              
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your work email"
-                required
-                className="flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
-              />
-              <Button type="submit" size="lg" className="bg-blue-500 hover:bg-blue-600 text-white">
-                Join Waitlist
-              </Button>
-            </form>
-            <p className="mt-4 text-sm text-zinc-500">No spam. Unsubscribe anytime.</p>
+            {isSubmitted ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-8 rounded-2xl bg-green-500/10 border border-green-500/20 max-w-lg mx-auto"
+              >
+                <div className="text-5xl mb-4"></div>
+                <h3 className="text-2xl font-bold text-green-400 mb-2">Congratulations!</h3>
+                <p className="text-zinc-300">You're on the list. We'll notify you as soon as Certis is ready.</p>
+              </motion.div>
+            ) : (
+              <form 
+                name="waitlist" 
+                method="POST" 
+                data-netlify="true" 
+                onSubmit={handleSubmit}
+                className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"
+              >
+                <input type="hidden" name="form-name" value="waitlist" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your work email"
+                  required
+                  className="flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+                />
+                <Button type="submit" size="lg" className="bg-blue-500 hover:bg-blue-600 text-white">
+                  Join Waitlist
+                </Button>
+              </form>
+            )}
+            {!isSubmitted && <p className="mt-4 text-sm text-zinc-500">No spam. Unsubscribe anytime.</p>}
           </motion.div>
         </div>
       </section>
