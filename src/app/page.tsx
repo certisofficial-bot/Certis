@@ -262,7 +262,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS SECTION */}
+      {/* TESTIMONIALS SECTION WITH REAL FAKE IMAGES */}
       <section className="py-32 bg-gradient-to-b from-white/5 to-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -283,21 +283,21 @@ export default function Home() {
                 author: "Sarah Chen",
                 role: "VP of Security",
                 company: "TechFlow Inc.",
-                avatar: "SC"
+                avatar: "https://i.pravatar.cc/150?img=47" // Professional female executive
               },
               {
                 quote: "Finally, a tool that understands security compliance. The AI actually gets the context right - it's not just keyword matching.",
                 author: "Michael Rodriguez",
                 role: "CISO",
                 company: "DataVault Systems",
-                avatar: "MR"
+                avatar: "https://i.pravatar.cc/150?img=53" // Professional male executive
               },
               {
                 quote: "Our compliance team was drowning in security questionnaires. Certis gave us our weekends back. Best investment we made this year.",
                 author: "Emily Watson",
                 role: "Director of Compliance",
                 company: "CloudScale",
-                avatar: "EW"
+                avatar: "https://i.pravatar.cc/150?img=44" // Professional female director
               }
             ].map((testimonial, index) => (
               <motion.div
@@ -311,9 +311,12 @@ export default function Home() {
                 <Quote className="w-8 h-8 text-emerald-400 mb-4" />
                 <p className="text-zinc-300 mb-6 leading-relaxed">"{testimonial.quote}"</p>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-semibold">
-                    {testimonial.avatar}
-                  </div>
+                  {/* REALISTIC FAKE PROFILE IMAGE */}
+                  <img 
+                    src={testimonial.avatar} 
+                    alt={testimonial.author} 
+                    className="w-12 h-12 rounded-full object-cover border-2 border-emerald-500/20"
+                  />
                   <div>
                     <div className="font-semibold text-white">{testimonial.author}</div>
                     <div className="text-sm text-zinc-400">{testimonial.role}</div>
