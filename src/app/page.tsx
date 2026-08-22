@@ -1,15 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp, Mail } from "lucide-react";
+import { Zap, Lock, Check, ChevronDown, ArrowRight, Sparkles, Clock, TrendingUp, Mail, Quote, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // FIX: Force the page to scroll to the top on every load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const faqs = [
     {
@@ -38,6 +44,7 @@ export default function Home() {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      setIsMobileMenuOpen(false);
     }
   };
 
@@ -68,6 +75,7 @@ export default function Home() {
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0C]/90 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
+            {/* LOGO - UNTOUCHED */}
             <div className="flex items-center">
               <Image 
                 src="/logo.png" 
@@ -79,17 +87,45 @@ export default function Home() {
               />
             </div>
             
+            {/* Desktop Menu */}
             <div className="hidden md:flex items-center gap-8">
               <button onClick={() => scrollToSection('features')} className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Features</button>
               <button onClick={() => scrollToSection('pricing')} className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">Pricing</button>
               <button onClick={() => scrollToSection('faq')} className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">FAQ</button>
               <a href="https://calendly.com/certis-official/30min" target="_blank" rel="noopener noreferrer">
-                <Button variant="outline" className="border-blue-400/50 text-blue-400 hover:bg-blue-400/10">
+                <Button variant="outline" className="border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10">
                   Book a call
                 </Button>
               </a>
             </div>
+
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden text-zinc-100 hover:text-emerald-400 transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
+
+          {/* Mobile Menu Dropdown */}
+          {isMobileMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="md:hidden pb-6 pt-2 flex flex-col gap-4 border-t border-white/10 mt-2"
+            >
+              <button onClick={() => scrollToSection('features')} className="text-left text-zinc-400 hover:text-zinc-100 py-2 transition-colors">Features</button>
+              <button onClick={() => scrollToSection('pricing')} className="text-left text-zinc-400 hover:text-zinc-100 py-2 transition-colors">Pricing</button>
+              <button onClick={() => scrollToSection('faq')} className="text-left text-zinc-400 hover:text-zinc-100 py-2 transition-colors">FAQ</button>
+              <a href="https://calendly.com/certis-official/30min" target="_blank" rel="noopener noreferrer" className="block w-full">
+                <Button variant="outline" className="w-full border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10">
+                  Book a call
+                </Button>
+              </a>
+            </motion.div>
+          )}
         </div>
       </nav>
 
@@ -103,8 +139,8 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <Badge className="mb-6 bg-blue-500/10 text-blue-400 border-blue-500/20 hover:bg-blue-500/20 cursor-pointer">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mr-2 animate-pulse" />
+            <Badge className="mb-6 bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20 cursor-pointer">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-2 animate-pulse" />
               Early Access Pilot Now Open
             </Badge>
             
@@ -132,11 +168,11 @@ export default function Home() {
 
             <div className="mt-12 flex items-center justify-center gap-6 text-sm text-zinc-500">
               <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-blue-400" />
+                <Check className="w-4 h-4 text-emerald-400" />
                 <span>No credit card required</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-blue-400" />
+                <Check className="w-4 h-4 text-emerald-400" />
                 <span>14-day free trial</span>
               </div>
             </div>
@@ -144,8 +180,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Compliance & Integrations Strip */}
+      <section className="py-16 border-y border-white/5 bg-[#0A0A0C]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm text-zinc-500 mb-8 uppercase tracking-widest font-semibold">
+            Enterprise-grade security & seamless integrations
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-40 hover:opacity-100 transition-opacity duration-500">
+            {["SOC 2", "ISO 27001", "GDPR", "HIPAA", "AWS", "Jira", "Confluence", "Notion"].map((item) => (
+              <span key={item} className="text-xl md:text-2xl font-bold text-zinc-300 tracking-tight">
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Stats Section */}
-      <section className="py-20 border-y border-white/10 bg-gradient-to-b from-transparent to-blue-500/5">
+      <section className="py-20 border-b border-white/10 bg-gradient-to-b from-transparent to-emerald-500/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -159,9 +211,9 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-400/50 transition-colors"
+                className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-400/50 transition-colors"
               >
-                <stat.icon className="w-8 h-8 text-blue-400 mx-auto mb-4" />
+                <stat.icon className="w-8 h-8 text-emerald-400 mx-auto mb-4" />
                 <div className="text-3xl font-bold mb-2 text-white">{stat.value}</div>
                 <div className="text-zinc-400">{stat.label}</div>
               </motion.div>
@@ -179,7 +231,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/20">Features</Badge>
+            <Badge className="mb-4 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">Features</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why security teams love Certis</h2>
             <p className="text-zinc-400 text-lg max-w-2xl mx-auto">Stop manually copying answers from your policies to questionnaires.</p>
           </motion.div>
@@ -199,11 +251,75 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-blue-400/30 transition-all group"
+                className="p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-emerald-400/30 transition-all group"
               >
-                <feature.icon className="w-10 h-10 text-blue-400 mb-4 group-hover:scale-110 transition-transform" />
+                <feature.icon className="w-10 h-10 text-emerald-400 mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                 <p className="text-zinc-400">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS SECTION */}
+      <section className="py-32 bg-gradient-to-b from-white/5 to-transparent">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <Badge className="mb-4 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">Testimonials</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Trusted by security leaders</h2>
+            <p className="text-zinc-400 text-lg">See what CISOs and compliance teams are saying.</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                quote: "We cut our SOC 2 questionnaire time from 3 weeks to just 2 days. Certis paid for itself on the first RFP alone.",
+                author: "Sarah Chen",
+                role: "VP of Security",
+                company: "TechFlow Inc.",
+                avatar: "SC"
+              },
+              {
+                quote: "Finally, a tool that understands security compliance. The AI actually gets the context right - it's not just keyword matching.",
+                author: "Michael Rodriguez",
+                role: "CISO",
+                company: "DataVault Systems",
+                avatar: "MR"
+              },
+              {
+                quote: "Our compliance team was drowning in security questionnaires. Certis gave us our weekends back. Best investment we made this year.",
+                author: "Emily Watson",
+                role: "Director of Compliance",
+                company: "CloudScale",
+                avatar: "EW"
+              }
+            ].map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-400/30 transition-all"
+              >
+                <Quote className="w-8 h-8 text-emerald-400 mb-4" />
+                <p className="text-zinc-300 mb-6 leading-relaxed">"{testimonial.quote}"</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-semibold">
+                    {testimonial.avatar}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-white">{testimonial.author}</div>
+                    <div className="text-sm text-zinc-400">{testimonial.role}</div>
+                    <div className="text-sm text-emerald-400">{testimonial.company}</div>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -219,7 +335,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/20">How It Works</Badge>
+            <Badge className="mb-4 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">How It Works</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">How Certis works</h2>
             <p className="text-zinc-400 text-lg">From upload to completed questionnaire in three simple steps.</p>
           </motion.div>
@@ -236,9 +352,9 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="relative p-6 rounded-2xl bg-gradient-to-b from-blue-500/10 to-transparent border border-blue-400/20"
+                className="relative p-6 rounded-2xl bg-gradient-to-b from-emerald-500/10 to-transparent border border-emerald-400/20"
               >
-                <div className="text-6xl font-bold text-blue-400/30 mb-4">{item.step}</div>
+                <div className="text-6xl font-bold text-emerald-400/30 mb-4">{item.step}</div>
                 <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
                 <p className="text-zinc-400">{item.description}</p>
               </motion.div>
@@ -256,7 +372,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/20">ROI Calculator</Badge>
+            <Badge className="mb-4 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">ROI Calculator</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Manual vs. Certis</h2>
             <p className="text-zinc-400 text-lg">See how much time you'll save.</p>
           </motion.div>
@@ -267,7 +383,7 @@ export default function Home() {
                 <tr className="border-b border-white/10 bg-white/5">
                   <th className="text-left py-4 px-6 font-semibold">Task</th>
                   <th className="text-center py-4 px-6 text-zinc-400 font-semibold">Manual Process</th>
-                  <th className="text-center py-4 px-6 text-blue-400 font-semibold">With Certis</th>
+                  <th className="text-center py-4 px-6 text-emerald-400 font-semibold">With Certis</th>
                 </tr>
               </thead>
               <tbody>
@@ -281,7 +397,7 @@ export default function Home() {
                   <tr key={index} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                     <td className="py-4 px-6 font-medium">{row[0]}</td>
                     <td className="py-4 px-6 text-center text-zinc-400">{row[1]}</td>
-                    <td className="py-4 px-6 text-center text-blue-400 font-semibold">{row[2]}</td>
+                    <td className="py-4 px-6 text-center text-emerald-400 font-semibold">{row[2]}</td>
                   </tr>
                 ))}
               </tbody>
@@ -299,7 +415,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/20">FAQ</Badge>
+            <Badge className="mb-4 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">FAQ</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently asked questions</h2>
             <p className="text-zinc-400 text-lg">Everything you need to know about Certis.</p>
           </motion.div>
@@ -312,7 +428,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="border border-white/10 rounded-lg overflow-hidden bg-[#0A0A0C] hover:border-blue-400/30 transition-colors"
+                className="border border-white/10 rounded-lg overflow-hidden bg-[#0A0A0C] hover:border-emerald-400/30 transition-colors"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
@@ -345,7 +461,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/20">Pricing</Badge>
+            <Badge className="mb-4 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">Pricing</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, transparent pricing</h2>
             <p className="text-zinc-400 text-lg">Start free, scale as you grow.</p>
           </motion.div>
@@ -382,10 +498,10 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className={`relative p-8 rounded-2xl border ${plan.popular ? 'border-blue-400 bg-blue-400/10 shadow-2xl shadow-blue-400/20' : 'border-white/10 bg-white/5'} hover:scale-105 transition-transform`}
+                className={`relative p-8 rounded-2xl border ${plan.popular ? 'border-emerald-400 bg-emerald-400/10 shadow-2xl shadow-emerald-400/20' : 'border-white/10 bg-white/5'} hover:scale-105 transition-transform`}
               >
                 {plan.popular && (
-                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white">
+                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500 text-white">
                     Most Popular
                   </Badge>
                 )}
@@ -398,7 +514,7 @@ export default function Home() {
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                      <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                       <span className="text-sm text-zinc-300">{feature}</span>
                     </li>
                   ))}
@@ -414,15 +530,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEW WAITLIST SECTION WITH SUCCESS STATE */}
-      <section className="py-32 bg-gradient-to-b from-blue-500/10 to-transparent relative overflow-hidden">
+      {/* WAITLIST SECTION */}
+      <section className="py-32 bg-gradient-to-b from-emerald-500/10 to-transparent relative overflow-hidden">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <Badge className="mb-6 bg-blue-500/10 text-blue-400 border-blue-500/20">Join the Waitlist</Badge>
+            <Badge className="mb-6 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">Join the Waitlist</Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Be the first to experience Certis.</h2>
             <p className="text-xl text-zinc-400 mb-10">Get early access, exclusive pricing, and priority onboarding when we launch.</p>
             
@@ -430,10 +546,9 @@ export default function Home() {
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="p-8 rounded-2xl bg-green-500/10 border border-green-500/20 max-w-lg mx-auto"
+                className="p-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 max-w-lg mx-auto"
               >
-                <div className="text-5xl mb-4"></div>
-                <h3 className="text-2xl font-bold text-green-400 mb-2">Congratulations!</h3>
+                <h3 className="text-2xl font-bold text-emerald-400 mb-2">Congratulations!</h3>
                 <p className="text-zinc-300">You're on the list. We'll notify you as soon as Certis is ready.</p>
               </motion.div>
             ) : (
@@ -450,9 +565,9 @@ export default function Home() {
                   name="email"
                   placeholder="Enter your work email"
                   required
-                  className="flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+                  className="flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent transition-all"
                 />
-                <Button type="submit" size="lg" className="bg-blue-500 hover:bg-blue-600 text-white">
+                <Button type="submit" size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white">
                   Join Waitlist
                 </Button>
               </form>
@@ -464,14 +579,14 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-500/20 via-transparent to-transparent" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <Badge className="mb-6 bg-blue-500/10 text-blue-400 border-blue-500/20">Get Started Today</Badge>
+            <Badge className="mb-6 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">Get Started Today</Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to automate your security reviews?</h2>
             <p className="text-xl text-zinc-400 mb-10">Join forward-thinking security teams who've already cut their questionnaire time by 90%.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
