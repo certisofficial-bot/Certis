@@ -3,19 +3,33 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Certis | Automate Security Questionnaires",
-  description: "Certis uses AI to auto-fill RFPs, security reviews, and SOC2 compliance docs. Reduce review cycles from weeks to hours.",
+  title: "Certis | Automate Security Questionnaires & RFPs with AI",
+  description: "Certis uses AI to auto-fill RFPs, security reviews, and SOC2 compliance docs. Reduce review cycles from weeks to hours. Join the waitlist today.",
+  keywords: [
+    "security automation", 
+    "RFP automation", 
+    "SOC 2 compliance", 
+    "AI security questionnaires", 
+    "compliance automation", 
+    "Certis"
+  ],
+  authors: [{ name: "Certis" }],
   openGraph: {
-    title: "Certis | Automate Security Questionnaires",
-    description: "Reduce security review cycles from weeks to hours with AI.",
-    url: "https://whimsical-biscochitos-5edcc5.netlify.app",
+    title: "Certis | Automate Security Questionnaires & RFPs with AI",
+    description: "Stop manually copying answers. Certis uses AI to auto-fill RFPs and compliance docs in minutes.",
+    url: "https://whimsical-biscochitos-5edcc5.netlify.app", // We will change this to certis.cloud later!
     siteName: "Certis",
     type: "website",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Certis | Automate Security Questionnaires",
-    description: "Reduce security review cycles from weeks to hours with AI.",
+    title: "Certis | Automate Security Questionnaires & RFPs with AI",
+    description: "Stop manually copying answers. Certis uses AI to auto-fill RFPs and compliance docs in minutes.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
